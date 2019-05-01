@@ -1,15 +1,16 @@
 package com.linkedinlearning.reactiveapp.service;
 
+import com.linkedinlearning.reactiveapp.model.Reservation;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface ReservationService {
 
-    Mono<String> getReservation(String priceName);
+    Mono<Reservation> getReservation(String priceName);
 
-    Mono<String> createReservation(String priceName);
+    Mono<Reservation> createReservation(Reservation reservation);
 
-    Mono<String> deleteReservation(String id);
+    Mono<Reservation> deleteReservation(String id);
 
-    Flux<String> listAllReservations();
+    Flux<Reservation> listAllReservations();
 }
