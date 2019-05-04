@@ -4,10 +4,15 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.linkedinlearning.reactiveapp.model.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Service
 public class ReservationServiceImpl implements ReservationService {
 
     private final ObjectWriter objectWriter;
@@ -32,9 +37,17 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Mono<Reservation> createReservation(Reservation reservation) {
+    public Mono<Reservation> createReservation(Mono<Reservation> reservation) {
         return reactiveMongoTemplate
                 .save(reservation);
+    }
+
+    @Override
+    public Mono<Reservation> updateReservation(String id, Mono<Reservation> reservation) {
+
+        return Mono.empty();
+
+
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.linkedinlearning.reactiveapp.controller;
 
+import com.linkedinlearning.reactiveapp.model.Reservation;
+import com.linkedinlearning.reactiveapp.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +19,15 @@ import static com.linkedinlearning.reactiveapp.controller.ReservationResource.RO
 @CrossOrigin
 public class ReservationResource {
 
-    public static final String ROOM_RESERVATION_V1 = "/room/reservation/v1";
+    public static final String ROOM_RESERVATION_V1 = "/room/v1/reservation/";
+
+
+    private final ReservationService reservationService;
 
     @Autowired
-    ConversionService conversionService;
+    public ReservationResource(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
 
     @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Mono<String> getAvailableRooms(
@@ -38,34 +45,34 @@ public class ReservationResource {
     @GetMapping(path = "/{roomId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Mono<String> getRoomById(
             @PathVariable
-                    Long roomId) {
+                    String roomId) {
 
         return Mono.empty();
     }
 
     @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Mono<String> createReservation(
+    public Mono<Reservation> createReservation(
             @RequestBody
-                    String reservationRequest) {
+                    Mono<Reservation> reservationRequest) {
 
-        return Mono.empty();
+        return reservationService.createReservation(reservationRequest);
     }
 
-    @PutMapping(path = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+    @PutMapping(path = "/{roomId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Mono<String> updateReservation(
-            @RequestBody
-                    String reservationRequest) {
+    public Mono<String> updateReservation(@PathVariable String roomId,
+                                          @RequestBody
+                                                  Mono<Reservation> reservationRequest) {
 
         return Mono.empty();
     }
 
     @DeleteMapping(path = "/{reservationId}")
-    public Mono<Void> deleteReservation(
+    public Mono<Reservation> deleteReservation(
             @PathVariable
-                    long reservationId) {
+                    Long reservationId) {
 
-        return Mono.empty();
+        return reservationService.deleteReservation(reservationId.toString());
     }
 }

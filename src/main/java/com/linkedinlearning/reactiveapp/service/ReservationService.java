@@ -8,7 +8,9 @@ public interface ReservationService {
 
     Mono<Reservation> getReservation(String priceName);
 
-    Mono<Reservation> createReservation(Reservation reservation);
+    Mono<Reservation> createReservation(Mono<Reservation> reservation);
+
+    Mono<Reservation> updateReservation(String id, Mono<Reservation> reservation);
 
     Mono<Reservation> deleteReservation(String id);
 
