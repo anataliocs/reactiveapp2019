@@ -9,12 +9,15 @@ import java.time.LocalDate;
 @Document
 public class Reservation {
 
-    private final Long roomNumber;
+    private Long roomNumber;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private final LocalDate checkin;
+    private LocalDate checkin;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private final LocalDate checkout;
-    private final Integer price;
+    private LocalDate checkout;
+    private Integer price;
+
+    public Reservation() {
+    }
 
     public Reservation(Long roomNumber, LocalDate checkin, LocalDate checkout, Integer price) {
         this.roomNumber = roomNumber;
@@ -44,5 +47,25 @@ public class Reservation {
 
     public String getId() {
         return id;
+    }
+
+    public void setRoomNumber(Long roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public void setCheckin(LocalDate checkin) {
+        this.checkin = checkin;
+    }
+
+    public void setCheckout(LocalDate checkout) {
+        this.checkout = checkout;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

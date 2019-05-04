@@ -43,11 +43,11 @@ public class ReservationResource {
     }
 
     @GetMapping(path = "/{roomId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Mono<String> getRoomById(
+    public Mono<Reservation> getRoomById(
             @PathVariable
                     String roomId) {
 
-        return Mono.empty();
+        return reservationService.getReservation(roomId);
     }
 
     @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -71,8 +71,8 @@ public class ReservationResource {
     @DeleteMapping(path = "/{reservationId}")
     public Mono<Boolean> deleteReservation(
             @PathVariable
-                    Long reservationId) {
+                    String reservationId) {
 
-        return reservationService.deleteReservation(reservationId.toString());
+        return reservationService.deleteReservation(reservationId);
     }
 }
