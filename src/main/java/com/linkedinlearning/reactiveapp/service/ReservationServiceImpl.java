@@ -2,6 +2,7 @@ package com.linkedinlearning.reactiveapp.service;
 
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.linkedinlearning.reactiveapp.model.Reservation;
+import com.mongodb.MongoCursorNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -46,13 +47,12 @@ public class ReservationServiceImpl implements ReservationService {
     public Mono<Reservation> updateReservation(String id, Mono<Reservation> reservation) {
 
         return Mono.empty();
-
-
     }
 
     @Override
-    public Mono<Reservation> deleteReservation(String id) {
-        return Mono.empty();
+    public Mono<Boolean> deleteReservation(String id) {
+        return reactiveMongoTemplate.remove(Query.query(Criteria.where("id").is(id)), Reservation.class).flatMap(
+                deleteResult -> Mono.just(deleteResult.wasAcknowledged()));
     }
 
     @Override

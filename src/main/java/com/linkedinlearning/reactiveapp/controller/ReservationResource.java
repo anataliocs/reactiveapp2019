@@ -69,7 +69,7 @@ public class ReservationResource {
     }
 
     @DeleteMapping(path = "/{reservationId}")
-    public Mono<Reservation> deleteReservation(
+    public Mono<Boolean> deleteReservation(
             @PathVariable
                     Long reservationId) {
 

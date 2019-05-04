@@ -12,7 +12,7 @@ public interface ReservationService {
 
     Mono<Reservation> updateReservation(String id, Mono<Reservation> reservation);
 
-    Mono<Reservation> deleteReservation(String id);
+    Mono<Boolean> deleteReservation(String id);
 
     Flux<Reservation> listAllReservations();
 }

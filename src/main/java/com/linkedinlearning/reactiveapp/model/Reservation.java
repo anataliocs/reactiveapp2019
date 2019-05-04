@@ -2,6 +2,7 @@ package com.linkedinlearning.reactiveapp.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
