@@ -45,8 +45,14 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Mono<Reservation> updateReservation(String id, Mono<Reservation> reservation) {
-
-        return Mono.empty();
+        return reservation
+                .flatMap(res -> reactiveMongoTemplate.
+                        findAndModify(Query.query(Criteria.where("id").is(id)),
+                                Update.update("price", res.getPrice()), Reservation.class)
+                        .flatMap(result -> {
+                            result.setPrice(res.getPrice());
+                            return Mono.just(result);
+                        }));
     }
 
     @Override

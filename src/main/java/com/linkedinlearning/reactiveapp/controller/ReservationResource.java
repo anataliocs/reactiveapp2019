@@ -3,7 +3,6 @@ package com.linkedinlearning.reactiveapp.controller;
 import com.linkedinlearning.reactiveapp.model.Reservation;
 import com.linkedinlearning.reactiveapp.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -12,15 +11,15 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 
-import static com.linkedinlearning.reactiveapp.controller.ReservationResource.ROOM_RESERVATION_V1;
+import static com.linkedinlearning.reactiveapp.controller.ReservationResource.ROOM_V1_RESERVATION;
+
 
 @RestController
-@RequestMapping(ROOM_RESERVATION_V1)
+@RequestMapping(ROOM_V1_RESERVATION)
 @CrossOrigin
 public class ReservationResource {
 
-    public static final String ROOM_RESERVATION_V1 = "/room/v1/reservation/";
-
+    public static final String ROOM_V1_RESERVATION = "/room/v1/reservation/";
 
     private final ReservationService reservationService;
 
@@ -61,11 +60,11 @@ public class ReservationResource {
 
     @PutMapping(path = "/{roomId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Mono<String> updateReservation(@PathVariable String roomId,
-                                          @RequestBody
-                                                  Mono<Reservation> reservationRequest) {
+    public Mono<Reservation> updateReservation(@PathVariable String roomId,
+                                               @RequestBody
+                                                       Mono<Reservation> reservation) {
 
-        return Mono.empty();
+        return reservationService.updateReservation(roomId, reservation);
     }
 
     @DeleteMapping(path = "/{reservationId}")
