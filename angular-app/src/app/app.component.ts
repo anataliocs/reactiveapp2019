@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 
 @Component({
@@ -14,16 +14,16 @@ export class AppComponent {
   constructor(private http: HttpClient) {
   }
 
-  private baseUrl:string = 'http://localhost:8080';
-  private getUrl:string = this.baseUrl + '/room/v1/reservation/';
-  private postUrl:string = this.baseUrl + '/room/v1/reservation/';
-  public submitted:boolean;
+  private baseUrl: string = 'http://localhost:8080';
+  private getUrl: string = this.baseUrl + '/room/v1/reservation/';
+  private postUrl: string = this.baseUrl + '/room/v1/reservation/';
+  public submitted: boolean;
 
-  roomsearch:FormGroup;
-  rooms:Room[];
-  request:ReserveRoomRequest;
-  currentCheckInVal:string;
-  currentCheckOutVal:string;
+  roomsearch: FormGroup;
+  rooms: Room[];
+  request: ReserveRoomRequest;
+  currentCheckInVal: string;
+  currentCheckOutVal: string;
 
   ngOnInit() {
     this.roomsearch = new FormGroup({
@@ -38,14 +38,14 @@ export class AppComponent {
       this.currentCheckInVal = x.checkin;
       this.currentCheckOutVal = x.checkout;
     });
+
+    this.rooms = [new Room("123", "123", "150", ""),
+      new Room("127", "127", "175", ""),
+      new Room("138", "138", "175", ""),
+    ]
   }
 
-  onSubmit({value, valid}: { value:RoomSearch, valid:boolean }) {
-
-
-  }
-
-  reserveRoom(value:string) {
+  reserveRoom(value: string) {
 
     this.request = new ReserveRoomRequest(value, this.currentCheckInVal, this.currentCheckOutVal);
 
@@ -53,7 +53,7 @@ export class AppComponent {
   }
 
 
-  createReservation(body:Object) {
+  createReservation(body: Object) {
     let bodyString = JSON.stringify(body); // Stringify payload
     let headers = new Headers({'Content-Type': 'application/json'}); // ... Set content type to JSON
 
@@ -61,17 +61,11 @@ export class AppComponent {
       .subscribe(res => console.log(res));
   }
 
-  mapRoom(response:Response):Room[] {
-
-    //TODO Fix
-    return null;
-  }
-
 }
 
 export interface RoomSearch {
-  checkin:string;
-  checkout:string;
+  checkin: string;
+  checkout: string;
 }
 
 export class ReserveRoomRequest {
@@ -89,10 +83,17 @@ export class ReserveRoomRequest {
   }
 }
 
-export interface Room {
-  id:string,
-  roomNumber:string,
-  price:string,
-  links:string
+export class Room {
+  id: string;
+  roomNumber: string;
+  price: string;
+  links: string;
 
+
+  constructor(id: string, roomNumber: string, price: string, links: string) {
+    this.id = id;
+    this.roomNumber = roomNumber;
+    this.price = price;
+    this.links = links;
+  }
 }
