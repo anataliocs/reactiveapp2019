@@ -149,7 +149,7 @@ body {
 
 /* line 2, ../../../components/sass/modules/_intro.scss */
 header .fullheight {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("images/hotel/splash_hotelphoto.jpg");
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url("../assets/images/hotel/splash_hotelphoto.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   -webkit-background-size: cover;
