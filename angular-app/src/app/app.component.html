@@ -36,33 +36,7 @@
             class="hidesm" src="/assets/images/intro_wedding.jpg"
             alt="Intro Gallery Dining Sample Pictures">
           </div>
-          <h1>Book a Room</h1>
 
-          <form class="form-horizontal" [formGroup]="roomsearch"
-                (ngSubmit)="onSubmit(roomsearch)">
-
-            <div class="form-group">
-              <label for="checkin" class="col-4">Check-In:</label>
-              <div class="col-8">
-                <input id="checkin" type="date" class="form-control"
-                       formControlName="checkin">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="checkin" class="col-4">Check-Out:</label>
-              <div class="col-8">
-                <input id="checkout" type="date" class="form-control"
-                       formControlName="checkout">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-offset-2 col-10">
-                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-              </div>
-            </div>
-
-          </form>
         </div>
       </div>
 
@@ -71,7 +45,7 @@
       <div class="row" *ngIf="rooms">
         <div class="col-12">
           <div class="table-responsive">
-            <table class="table">
+            <table class="table" id="roomsTable">
               <tbody>
               <tr *ngFor="let room of rooms">
                 <td>
@@ -82,7 +56,34 @@
                   <strong>Price: ${{room.price}}</strong>
                 </td>
                 <td>
-                  <button type="submit" class="btn btn-primary" (click)="reserveRoom(room.id)">Reserve</button>
+
+                  <form class="form-horizontal" [formGroup]="roomsearch"
+                        (ngSubmit)="reserveRoom(room.id)">
+
+                    <div class="form-group">
+                      <label for="checkin" class="col-4">Check-In:</label>
+                      <div class="col-8">
+                        <input id="checkin" type="date" class="form-control"
+                               formControlName="checkin">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="checkin" class="col-4">Check-Out:</label>
+                      <div class="col-8">
+                        <input id="checkout" type="date" class="form-control"
+                               formControlName="checkout">
+                      </div>
+                    </div>
+
+                    <br/>
+                    <div class="form-group">
+                      <div class="col-offset-2 col-10">
+                        <button type="submit" class="btn btn-primary btn-lg">Reserve Room</button>
+                      </div>
+                    </div>
+
+                  </form>
+
                 </td>
               </tr>
               </tbody>
