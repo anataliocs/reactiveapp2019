@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {HttpClient} from '@angular/common/http';
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -15,7 +14,6 @@ export class AppComponent {
   }
 
   private baseUrl: string = 'http://localhost:8080';
-  private getUrl: string = this.baseUrl + '/room/v1/reservation/';
   private postUrl: string = this.baseUrl + '/room/v1/reservation/';
   public submitted: boolean;
 
@@ -61,11 +59,6 @@ export class AppComponent {
       .subscribe(res => console.log(res));
   }
 
-}
-
-export interface RoomSearch {
-  checkin: string;
-  checkout: string;
 }
 
 export class ReserveRoomRequest {
