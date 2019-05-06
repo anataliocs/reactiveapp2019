@@ -37,9 +37,9 @@ export class AppComponent {
       this.currentCheckOutVal = x.checkout;
     });
 
-    this.rooms = [new Room("123", "123", "150", ""),
-      new Room("127", "127", "175", ""),
-      new Room("138", "138", "175", ""),
+    this.rooms = [new Room("123", "123", "150"),
+      new Room("127", "127", "175"),
+      new Room("138", "138", "175"),
     ]
   }
 
@@ -80,13 +80,11 @@ export class Room {
   id: string;
   roomNumber: string;
   price: string;
-  links: string;
 
 
-  constructor(id: string, roomNumber: string, price: string, links: string) {
+  constructor(id: string, roomNumber: string, price: string) {
     this.id = id;
     this.roomNumber = roomNumber;
     this.price = price;
-    this.links = links;
   }
 }
