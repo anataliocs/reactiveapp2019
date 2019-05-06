@@ -55,8 +55,24 @@ export class AppComponent {
     let bodyString = JSON.stringify(body); // Stringify payload
     let headers = new Headers({'Content-Type': 'application/json'}); // ... Set content type to JSON
 
-    this.http.post(this.postUrl, body)
-      .subscribe(res => console.log(res));
+    this.http.post<Reservation>(this.postUrl, body)
+      .subscribe(res => {
+        console.log(res);
+        console.log(res.price);
+
+      });
+  }
+
+  getReservations(body: Object) {
+    let bodyString = JSON.stringify(body); // Stringify payload
+    let headers = new Headers({'Content-Type': 'application/json'}); // ... Set content type to JSON
+
+    this.http.get(this.postUrl+ "123")
+      .subscribe(res => {
+        console.log(res);
+
+
+      });
   }
 
 }
@@ -87,4 +103,12 @@ export class Room {
     this.roomNumber = roomNumber;
     this.price = price;
   }
+}
+
+export interface Reservation {
+  id: string;
+  roomNumber: number;
+  checkin: Date;
+  checkout: Date;
+  price: number;
 }
