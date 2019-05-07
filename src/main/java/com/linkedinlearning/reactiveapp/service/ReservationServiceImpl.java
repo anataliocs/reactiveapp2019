@@ -2,7 +2,6 @@ package com.linkedinlearning.reactiveapp.service;
 
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.linkedinlearning.reactiveapp.model.Reservation;
-import com.mongodb.MongoCursorNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
