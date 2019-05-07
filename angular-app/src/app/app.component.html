@@ -98,7 +98,9 @@
             <label for="roomNumber" class="col-4">Room Number:</label>
             <div class="col-8">
               <select id="roomNumber" formControlName="roomNumber">
-                <option *ngFor="let room of rooms" value="{{room.roomNumber}}">{{room.roomNumber}}</option>
+                <option *ngFor="let room of rooms" [value]="room.roomNumber + '|' + room.price">
+                  {{room.roomNumber}}
+                </option>
               </select>
             </div>
           </div>

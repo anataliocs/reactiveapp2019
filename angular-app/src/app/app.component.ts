@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, SelectControlValueAccessor} from "@angular/forms";
 import {Reservation, ReservationService, ReserveRoomRequest} from "./reservation.service";
 
 @Component({
@@ -22,13 +22,16 @@ export class AppComponent {
   request: ReserveRoomRequest;
   currentCheckInVal: string;
   currentCheckOutVal: string;
-  currentRoomNumber: string;
+  currentRoomNumber: number;
+  currentPrice: number;
   currentReservations: Reservation[];
+
 
   ngOnInit() {
     this.roomsearch = new FormGroup({
       checkin: new FormControl(''),
-      checkout: new FormControl('')
+      checkout: new FormControl(''),
+      roomNumber: new FormControl(null)
     });
 
     const roomsearchValueChanges$ = this.roomsearch.valueChanges;
@@ -37,7 +40,11 @@ export class AppComponent {
     roomsearchValueChanges$.subscribe(form => {
       this.currentCheckInVal = form.checkin;
       this.currentCheckOutVal = form.checkout;
-      this.currentRoomNumber = form.roomNumber;
+      
+      let roomVals: string[] = form.roomNumber.split("|");
+      this.currentRoomNumber = Number(roomVals[0]);
+      this.currentPrice = Number(roomVals[1]);
+
     });
 
     this.rooms = [new Room("123", "123", "150"),
@@ -59,7 +66,10 @@ export class AppComponent {
 
   reserveRoom() {
 
-    this.request = new ReserveRoomRequest(this.currentRoomNumber, this.currentCheckInVal, this.currentCheckOutVal);
+    console.log("price " + this.currentPrice);
+
+    this.request = new ReserveRoomRequest(Number(this.currentRoomNumber), this.currentPrice,
+      this.currentCheckInVal, this.currentCheckOutVal);
     this.reservationService.createReservation(this.request);
     this.getCurrentReservations();
   }

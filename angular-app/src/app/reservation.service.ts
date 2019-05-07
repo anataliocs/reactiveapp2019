@@ -33,15 +33,18 @@ export class ReservationService {
 }
 
 export class ReserveRoomRequest {
-  roomId: string;
+  roomNumber: number;
   checkin: string;
   checkout: string;
+  price: number;
 
-  constructor(roomId: string,
+  constructor(roomNumber: number,
+              price: number,
               checkin: string,
               checkout: string) {
 
-    this.roomId = roomId;
+    this.roomNumber = roomNumber;
+    this.price = price;
     this.checkin = checkin;
     this.checkout = checkout;
   }
