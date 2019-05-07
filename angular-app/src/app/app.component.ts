@@ -40,11 +40,10 @@ export class AppComponent {
     roomsearchValueChanges$.subscribe(form => {
       this.currentCheckInVal = form.checkin;
       this.currentCheckOutVal = form.checkout;
-      
+
       let roomVals: string[] = form.roomNumber.split("|");
       this.currentRoomNumber = Number(roomVals[0]);
       this.currentPrice = Number(roomVals[1]);
-
     });
 
     this.rooms = [new Room("123", "123", "150"),
@@ -65,10 +64,7 @@ export class AppComponent {
   }
 
   reserveRoom() {
-
-    console.log("price " + this.currentPrice);
-
-    this.request = new ReserveRoomRequest(Number(this.currentRoomNumber), this.currentPrice,
+    this.request = new ReserveRoomRequest(this.currentRoomNumber, this.currentPrice,
       this.currentCheckInVal, this.currentCheckOutVal);
     this.reservationService.createReservation(this.request);
     this.getCurrentReservations();
