@@ -22,6 +22,7 @@ export class AppComponent {
   request: ReserveRoomRequest;
   currentCheckInVal: string;
   currentCheckOutVal: string;
+  currentRoomNumber: string;
   currentReservations: Reservation[];
 
   ngOnInit() {
@@ -33,9 +34,10 @@ export class AppComponent {
     const roomsearchValueChanges$ = this.roomsearch.valueChanges;
 
     // subscribe to the stream
-    roomsearchValueChanges$.subscribe(x => {
-      this.currentCheckInVal = x.checkin;
-      this.currentCheckOutVal = x.checkout;
+    roomsearchValueChanges$.subscribe(form => {
+      this.currentCheckInVal = form.checkin;
+      this.currentCheckOutVal = form.checkout;
+      this.currentRoomNumber = form.roomNumber;
     });
 
     this.rooms = [new Room("123", "123", "150"),
@@ -43,7 +45,6 @@ export class AppComponent {
       new Room("138", "138", "175"),
     ]
 
-    this.currentReservations = [];
     this.getCurrentReservations();
   }
 
@@ -56,9 +57,9 @@ export class AppComponent {
       );
   }
 
-  reserveRoom(value: string) {
+  reserveRoom() {
 
-    this.request = new ReserveRoomRequest(value, this.currentCheckInVal, this.currentCheckOutVal);
+    this.request = new ReserveRoomRequest(this.currentRoomNumber, this.currentCheckInVal, this.currentCheckOutVal);
     this.reservationService.createReservation(this.request);
     this.getCurrentReservations();
   }
