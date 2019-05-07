@@ -13,10 +13,6 @@ export class AppComponent {
   constructor(private  reservationService: ReservationService) {
   }
 
-  private baseUrl: string = 'http://localhost:8080';
-  private postUrl: string = this.baseUrl + '/room/v1/reservation/';
-  public submitted: boolean;
-
   roomsearch: FormGroup;
   rooms: Room[];
   request: ReserveRoomRequest;
@@ -25,8 +21,6 @@ export class AppComponent {
   currentRoomNumber: number;
   currentPrice: number;
   currentReservations: Reservation[];
-  selectedRoom: Room;
-
 
   ngOnInit() {
     this.roomsearch = new FormGroup({
