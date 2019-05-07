@@ -14,7 +14,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
-public class ReservationServiceImpl implements ReservationService {
+class ReservationServiceImpl implements ReservationService {
 
     private final ObjectWriter objectWriter;
 
@@ -45,6 +45,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Mono<Reservation> updateReservation(String id, Mono<Reservation> reservation) {
+
         return reservation
                 .flatMap(res -> reactiveMongoTemplate.
                         findAndModify(Query.query(Criteria.where("id").is(id)),
@@ -57,8 +58,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Mono<Boolean> deleteReservation(String id) {
-        return reactiveMongoTemplate.remove(Query.query(Criteria.where("id").is(id)), Reservation.class).flatMap(
-                deleteResult -> Mono.just(deleteResult.wasAcknowledged()));
+        return reactiveMongoTemplate.remove(Query
+                .query(Criteria.where("id").is(id)), Reservation.class)
+                .flatMap(deleteResult -> Mono.just(deleteResult.wasAcknowledged()));
     }
 
     @Override

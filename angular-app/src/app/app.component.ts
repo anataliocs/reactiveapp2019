@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {HttpClient} from '@angular/common/http';
+import {Reservation, ReservationService, ReserveRoomRequest} from "./reservation.service";
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,7 @@ import {HttpClient} from '@angular/common/http';
 export class AppComponent {
   title = 'angular-app';
 
-  constructor(private http: HttpClient) {
+  constructor(private  reservationService: ReservationService) {
   }
 
   private baseUrl: string = 'http://localhost:8080';
@@ -22,6 +22,7 @@ export class AppComponent {
   request: ReserveRoomRequest;
   currentCheckInVal: string;
   currentCheckOutVal: string;
+  currentReservations: Reservation[];
 
   ngOnInit() {
     this.roomsearch = new FormGroup({
@@ -41,54 +42,21 @@ export class AppComponent {
       new Room("127", "127", "175"),
       new Room("138", "138", "175"),
     ]
+
+    this.reservationService.getReservations()
+      .subscribe(result => {
+          console.log(result);
+          this.currentReservations.push(result);
+        }
+      );
+
+    this.currentReservations
   }
 
   reserveRoom(value: string) {
 
     this.request = new ReserveRoomRequest(value, this.currentCheckInVal, this.currentCheckOutVal);
-
-    this.createReservation(this.request);
-  }
-
-
-  createReservation(body: Object) {
-    let bodyString = JSON.stringify(body); // Stringify payload
-    let headers = new Headers({'Content-Type': 'application/json'}); // ... Set content type to JSON
-
-    this.http.post<Reservation>(this.postUrl, body)
-      .subscribe(res => {
-        console.log(res);
-        console.log(res.price);
-
-      });
-  }
-
-  getReservations(body: Object) {
-    let bodyString = JSON.stringify(body); // Stringify payload
-    let headers = new Headers({'Content-Type': 'application/json'}); // ... Set content type to JSON
-
-    this.http.get(this.postUrl+ "123")
-      .subscribe(res => {
-        console.log(res);
-
-
-      });
-  }
-
-}
-
-export class ReserveRoomRequest {
-  roomId: string;
-  checkin: string;
-  checkout: string;
-
-  constructor(roomId: string,
-              checkin: string,
-              checkout: string) {
-
-    this.roomId = roomId;
-    this.checkin = checkin;
-    this.checkout = checkout;
+    this.reservationService.createReservation(this.request);
   }
 }
 
@@ -105,10 +73,4 @@ export class Room {
   }
 }
 
-export interface Reservation {
-  id: string;
-  roomNumber: number;
-  checkin: Date;
-  checkout: Date;
-  price: number;
-}
+
