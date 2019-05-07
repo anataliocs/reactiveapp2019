@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.data.mongo.MongoReactiveDataAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication(exclude = MongoDataAutoConfiguration.class)
+@SpringBootApplication(exclude = {MongoReactiveDataAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class Application {
 
     public static void main(String[] args) {

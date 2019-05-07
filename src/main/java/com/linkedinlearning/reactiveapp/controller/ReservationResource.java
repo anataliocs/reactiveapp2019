@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -28,25 +29,18 @@ public class ReservationResource {
         this.reservationService = reservationService;
     }
 
-    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Mono<String> getAvailableRooms(
-            @RequestParam(value = "checkin")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                    LocalDate checkin,
-            @RequestParam(value = "checkout")
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-                    LocalDate checkout, Pageable pageable) {
-
-
-        return Mono.empty();
-    }
-
     @GetMapping(path = "/{roomId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Mono<Reservation> getRoomById(
             @PathVariable
                     String roomId) {
 
         return reservationService.getReservation(roomId);
+    }
+
+    @GetMapping(path = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Flux<Reservation> getAllReservations() {
+
+        return reservationService.listAllReservations();
     }
 
     @PostMapping(path = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE,

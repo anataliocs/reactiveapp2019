@@ -43,20 +43,24 @@ export class AppComponent {
       new Room("138", "138", "175"),
     ]
 
+    this.currentReservations = [];
+    this.getCurrentReservations();
+  }
+
+  getCurrentReservations() {
     this.reservationService.getReservations()
       .subscribe(result => {
           console.log(result);
-          this.currentReservations.push(result);
+          this.currentReservations = result;
         }
       );
-
-    this.currentReservations
   }
 
   reserveRoom(value: string) {
 
     this.request = new ReserveRoomRequest(value, this.currentCheckInVal, this.currentCheckOutVal);
     this.reservationService.createReservation(this.request);
+    this.getCurrentReservations();
   }
 }
 

@@ -15,7 +15,7 @@ export class ReservationService {
   getReservations() {
     let headers = new Headers({'Content-Type': 'application/json'}); // ... Set content type to JSON
 
-    return this.http.get<Reservation>(this.postUrl);
+    return this.http.get<Reservation[]>(this.postUrl);
   }
 
   createReservation(body: Object) {

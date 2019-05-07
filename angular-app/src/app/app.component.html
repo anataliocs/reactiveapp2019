@@ -1,5 +1,3 @@
-
-
 <header id="intro" style="display: block;">
   <article class="fullheight" style="height: 568px;">
     <div class="hgroup">
@@ -41,8 +39,17 @@
       </div>
 
       <div class="row" *ngIf="currentReservations">
-      <h1>Current Reservations</h1>
+        <h1>Current Reservations</h1>
 
+        <div *ngFor="let reservation of currentReservations">
+          <ul>
+            <li><strong>Room #:</strong> {{reservation.roomNumber}}</li>
+            <li><strong>Price: $</strong> {{reservation.price}}</li>
+            <li><strong>Check-in:</strong> {{reservation.checkin[1]}}-{{reservation.checkin[2]}}</li>
+            <li><strong>Check-out:</strong> {{reservation.checkout[1]}}-{{reservation.checkout[2]}}</li>
+          </ul>
+          <hr/>
+        </div>
 
       </div>
 
