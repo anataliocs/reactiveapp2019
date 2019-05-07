@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup, SelectControlValueAccessor} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {Reservation, ReservationService, ReserveRoomRequest} from "./reservation.service";
 
 @Component({
@@ -25,13 +25,14 @@ export class AppComponent {
   currentRoomNumber: number;
   currentPrice: number;
   currentReservations: Reservation[];
+  selectedRoom: Room;
 
 
   ngOnInit() {
     this.roomsearch = new FormGroup({
       checkin: new FormControl(''),
       checkout: new FormControl(''),
-      roomNumber: new FormControl(null)
+      roomNumber: new FormControl(null),
     });
 
     const roomsearchValueChanges$ = this.roomsearch.valueChanges;
@@ -41,9 +42,11 @@ export class AppComponent {
       this.currentCheckInVal = form.checkin;
       this.currentCheckOutVal = form.checkout;
 
-      let roomVals: string[] = form.roomNumber.split("|");
-      this.currentRoomNumber = Number(roomVals[0]);
-      this.currentPrice = Number(roomVals[1]);
+      if(form.roomNumber) {
+        let roomVals: string[] = form.roomNumber.split("|");
+        this.currentRoomNumber = Number(roomVals[0]);
+        this.currentPrice = Number(roomVals[1]);
+      }
     });
 
     this.rooms = [new Room("123", "123", "150"),
