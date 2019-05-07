@@ -30,7 +30,7 @@ public class ReservationResource {
     }
 
     @GetMapping(path = "/{roomId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Mono<Reservation> getRoomById(
+    public Mono<Reservation> getReservationById(
             @PathVariable
                     String roomId) {
 
