@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +13,21 @@ export class ReservationService {
   private baseUrl: string = 'http://localhost:8080';
   private postUrl: string = this.baseUrl + '/room/v1/reservation/';
 
-  getReservations() {
-    let headers = new Headers({'Content-Type': 'application/json'}); // ... Set content type to JSON
+  getReservations(): Observable<Reservation[]> {
 
     return this.http.get<Reservation[]>(this.postUrl);
   }
 
-  createReservation(body: Object) {
-    let bodyString = JSON.stringify(body); // Stringify payload
-    let headers = new Headers({'Content-Type': 'application/json'}); // ... Set content type to JSON
+  createReservation(body: ReservationRequest): Observable<Reservation> {
+    let httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
 
-    this.http.post<Reservation>(this.postUrl, body)
-      .subscribe(res => {
-        console.log(res);
-        console.log(res.price);
-
-      });
+    return this.http.post<Reservation>(this.postUrl, body, httpOptions);
   }
-
 }
 
-export class ReserveRoomRequest {
+export class ReservationRequest {
   roomNumber: number;
   checkin: string;
   checkout: string;

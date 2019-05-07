@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {Reservation, ReservationService, ReserveRoomRequest} from "./reservation.service";
+import {Reservation, ReservationService, ReservationRequest} from "./reservation.service";
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent {
 
   roomsearch: FormGroup;
   rooms: Room[];
-  request: ReserveRoomRequest;
+  request: ReservationRequest;
   currentCheckInVal: string;
   currentCheckOutVal: string;
   currentRoomNumber: number;
@@ -36,7 +36,7 @@ export class AppComponent {
       this.currentCheckInVal = form.checkin;
       this.currentCheckOutVal = form.checkout;
 
-      if(form.roomNumber) {
+      if (form.roomNumber) {
         let roomVals: string[] = form.roomNumber.split("|");
         this.currentRoomNumber = Number(roomVals[0]);
         this.currentPrice = Number(roomVals[1]);
@@ -60,11 +60,14 @@ export class AppComponent {
       );
   }
 
-  reserveRoom() {
-    this.request = new ReserveRoomRequest(this.currentRoomNumber, this.currentPrice,
+  createReservation() {
+    this.request = new ReservationRequest(this.currentRoomNumber, this.currentPrice,
       this.currentCheckInVal, this.currentCheckOutVal);
-    this.reservationService.createReservation(this.request);
-    this.getCurrentReservations();
+    this.reservationService.createReservation(this.request)
+      .subscribe(postResult => {
+        console.log(postResult);
+        this.getCurrentReservations();
+      });
   }
 }
 
