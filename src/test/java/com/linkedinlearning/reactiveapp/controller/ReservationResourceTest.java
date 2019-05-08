@@ -29,7 +29,7 @@ public class ReservationResourceTest {
     private Reservation expectedReservation;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         webTestClient = WebTestClient
                 .bindToApplicationContext(this.context)
                 .build();
